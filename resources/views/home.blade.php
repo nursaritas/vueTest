@@ -1,0 +1,65 @@
+@extends('layouts.app')
+
+@section('content')
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <title>Cloudinary Image Upload</title>
+        <meta name="description" content="Prego is a project management app built for learning purposes">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    </head>
+    <body>
+    <div class="sidenav">
+        <br><br>
+
+        <a href="#" class=""  role="" aria-expanded="false">
+            Welcome
+            {{ Auth::user()->name }} <span class=""></span>
+        </a>
+
+
+        <a href="{{ url('files') }}">Files</a>
+        <a href="{{ url('cloud') }}">Cloud Files</a>
+
+    </div>
+    <div class="container" style="margin-top: 100px;">
+        <div class="row">
+            <h4 class="text-center">
+                Upload Images Cloud
+            </h4>
+
+
+
+
+            <div class="row">
+                <div id="formWrapper" class="col-md-4 col-md-offset-4">
+                    <form class="form-vertical" role="form" enctype="multipart/form-data" method="post" action="{{ route('uploadImage')  }}">
+                        {{csrf_field()}}
+                        @if(session()->has('status'))
+                            <div class="alert alert-info" role="alert">
+                                {{session()->get('status')}}
+                            </div>
+                        @endif
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <input type="file" name="image_name" class="form-control" id="name" value="">
+                            @if($errors->has('image_name'))
+                                <span class="help-block">{{ $errors->first('image_name') }}</span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Upload</button>
+                        </div>
+                    </form>
+                    
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </body>
+    </html>
+@endsection
